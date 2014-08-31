@@ -13,14 +13,27 @@
     $(function(){
     	  // SyntaxHighlighter.all();
 
-        $(".format-style .btn").click(function () {
+        $(".format-style .btn-default").click(function () {
             $("#format-style").val($(this).attr('name'))
             // swicthing active
             $(".format-style .btn").removeClass("active")
             $(this).addClass("active")
 
-            g_system_capa = $("#format-style").val()
-            console.log(g_system_capa)
+            var format_style = $("#format-style").val();
+            console.log(format_style)
+
+            $.ajax({
+                type : 'post',
+                url : "../style",
+                data : format_style,
+                scriptCharset: 'utf-8',
+                success : function(data) {
+                  console.log(data)
+                },
+                error : function(data) {
+                  alert("error")
+                }
+            });
         });
 
         $("#submit").click( function(){
@@ -28,7 +41,7 @@
 
             $.ajax({
                 type : 'post',
-                url : "../api",
+                url : "../format",
                 data : code,
                 scriptCharset: 'utf-8',
                 success : function(data) {
