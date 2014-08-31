@@ -26,7 +26,7 @@ func format(w http.ResponseWriter, r *http.Request) {
 	err = ioutil.WriteFile("./tmp/tmp.txt", body, 0644)
 	check(err)
 
-	out, err := exec.Command("clang-format-3.4", "./tmp/tmp.txt").Output()
+	out, err := exec.Command("clang-format", "./tmp/tmp.txt").Output()
 	check(err)
 
 	fmt.Fprintf(w, string(out))
