@@ -11,7 +11,17 @@
   <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js"></script> -->
   <script type="text/javascript">
     $(function(){
-    	// SyntaxHighlighter.all();
+    	  // SyntaxHighlighter.all();
+
+        $(".format-style .btn").click(function () {
+            $("#format-style").val($(this).attr('name'))
+            // swicthing active
+            $(".format-style .btn").removeClass("active")
+            $(this).addClass("active")
+
+            g_system_capa = $("#format-style").val()
+            console.log(g_system_capa)
+        });
 
         $("#submit").click( function(){
             var code = $("#code").val();
@@ -32,10 +42,14 @@
         })
     })
 </script>
-  <body>
-    <div class="container">
-      <h1>clang-formatter</h1>
-      <textarea class="form-control"　rows="10" id="code" style="height:350px;">
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>clang-formatter</h1>
+          <p>clang-format-3.4</p>
+          <textarea class="form-control"　rows="10" id="code" style="height:350px;">
 #include <stdio.h>
  
 int myfunc ( int x )
@@ -52,11 +66,22 @@ int main( void )
  
     return 0;
 }
-      </textarea>
-      <button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">整形する</button>
+          </textarea>
+          <input type="hidden" id="format-style" name="selected" value="" />
+          <div class="btn-group format-style btn-group-lg">
+            <button type="button" class="btn btn-default active" name="LLVM">LLVM</button>
+            <button type="button" class="btn btn-default" name="Google">Google</button>
+            <button type="button" class="btn btn-default" name="Chromium">Chromium</button>
+            <button type="button" class="btn btn-default" name="Mozilla">Mozilla</button>
+            <button type="button" class="btn btn-default" name="WebKit">WebKit</button>
+　          <button class="btn btn-lg btn-primary" id="submit" type="submit">整形する</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /container -->
-  </body>
+  </div>
+  <!-- /container -->
+</body>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </html>
