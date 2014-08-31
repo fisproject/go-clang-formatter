@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	//"encoding/json"
+	"encoding/base64"
 )
 
 var format_style = "LLVM"
@@ -63,10 +64,12 @@ func format(w http.ResponseWriter, r *http.Request) {
 	s := get_style(format_style)
 	fmt.Println("current format-style is", s)
 
-	out, err := exec.Command("clang-format", s, "./tmp/tmp.txt").Output()
+	stdout, err := exec.Command("clang-format", s, "./tmp/tmp.txt").Output()
 	check(err)
 
-	fmt.Fprintf(w, string(out))
+	enc := base64.StdEncoding.EncodeToString(stdout)
+
+	fmt.Fprintf(w, enc)
 
 	err = os.Remove("./tmp/tmp.txt")
 	check(err)

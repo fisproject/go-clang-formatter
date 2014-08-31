@@ -5,6 +5,7 @@
     <title>clang-formatter</title>
   </head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="js/base64.js"></script>
   <!-- <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" />
   <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
   <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js" ></script>
@@ -45,8 +46,8 @@
                 data : code,
                 scriptCharset: 'utf-8',
                 success : function(data) {
-                    // $("#out").html('<pre class="brush: c;">' + data + '</pre>')
-                	$("#code").val(data)
+                  var dec = Base64.decode(data);
+                  $("#code").val(dec)
                 },
                 error : function(data) {
                 	alert("error")
