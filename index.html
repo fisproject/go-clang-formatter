@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>clang-formatter</title>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" />
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js" ></script>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js"></script> -->
+  <script type="text/javascript">
+    $(function(){
+    	// SyntaxHighlighter.all();
+
+        $("#submit").click( function(){
+            var code = $("#code").val();
+
+            $.ajax({
+                type : 'post',
+                url : "../api",
+                data : code,
+                scriptCharset: 'utf-8',
+                success : function(data) {
+                    // $("#out").html('<pre class="brush: c;">' + data + '</pre>')
+                	$("#code").val(data)
+                },
+                error : function(data) {
+                	alert("error")
+                }
+            });
+        })
+    })
+</script>
+  <body>
+    <div class="container">
+      <h1>clang-formatter</h1>
+      <textarea class="form-control"　rows="10" id="code" style="height:350px;">
+#include <stdio.h>
+ 
+int myfunc ( int x )
+{
+    return x * 2;
+}
+ 
+int main( void )
+{
+    int in = 9;
+    int out = myfunc(in);
+ 
+    printf("%d\n",out);
+ 
+    return 0;
+}
+      </textarea>
+      <button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">整形する</button>
+    </div>
+    <!-- /container -->
+  </body>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</html>
