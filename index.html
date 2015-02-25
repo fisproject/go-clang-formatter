@@ -11,46 +11,65 @@
   <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js" ></script>
   <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js"></script> -->
   <script type="text/javascript">
+    'use strict'
+
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+      }
+      return s4() + s4() + s4() + s4();
+    }
+
+    var uuid = guid();
+
     $(function(){
     	  // SyntaxHighlighter.all();
 
-        $(".format-style .btn-default").click(function () {
+        $(".format-style .btn-default").on('click',function() {
             $("#format-style").val($(this).attr('name'))
             // swicthing active
             $(".format-style .btn").removeClass("active")
             $(this).addClass("active")
 
-            var format_style = $("#format-style").val();
-            console.log(format_style)
+            var req = {
+              style : $("#format-style").val(),
+              uuid : uuid
+            }
+
+            console.log(req)
 
             $.ajax({
                 type : 'post',
                 url : "../style",
-                data : format_style,
+                data : JSON.stringify(req),
                 scriptCharset: 'utf-8',
-                success : function(data) {
-                  console.log(data)
+                success : function(res) {
+                  console.log(res)
                 },
-                error : function(data) {
-                  alert("error")
+                error : function(err) {
+                  console.log(err)
                 }
             });
         });
 
-        $("#submit").click( function(){
-            var code = $("#code").val();
+        $("#submit").on('click',function() {            
+            var req = {
+              code : Base64.encode($("#code").val()),
+              uuid : uuid
+            }
 
             $.ajax({
                 type : 'post',
                 url : "../format",
-                data : code,
+                data : JSON.stringify(req),
                 scriptCharset: 'utf-8',
-                success : function(data) {
-                  var dec = Base64.decode(data);
-                  $("#code").val(dec)
+                success : function(res) {
+                  $("#code").val(Base64.decode(res))
                 },
-                error : function(data) {
-                	alert("error")
+                error : function(err) {
+                  console.log(err)
                 }
             });
         })
